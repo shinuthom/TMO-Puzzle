@@ -1,11 +1,11 @@
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Input,
   OnInit
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { CHART_OPTIONS } from './consts/chart-const';
+import { IChartOptions } from './interface/chart-options.interface';
 
 @Component({
   selector: 'coding-challenge-chart',
@@ -13,27 +13,18 @@ import { Observable } from 'rxjs';
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit {
-  @Input() data$: Observable<any>;
-  chartData: any;
-
+  @Input() data: (string | number)[][];
+  
   chart: {
     title: string;
     type: string;
-    data: any;
+    data: (string | number)[][];
     columnNames: string[];
-    options: any;
+    options: IChartOptions;
   };
   constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.chart = {
-      title: '',
-      type: 'LineChart',
-      data: [],
-      columnNames: ['period', 'close'],
-      options: { title: `Stock price`, width: '600', height: '400' }
-    };
-
-    this.data$.subscribe(newData => (this.chartData = newData));
+    this.chart = CHART_OPTIONS;
   }
 }

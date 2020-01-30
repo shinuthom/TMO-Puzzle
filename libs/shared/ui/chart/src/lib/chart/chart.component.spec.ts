@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ChangeDetectorRef} from '@angular/core';
 import { ChartComponent } from './chart.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 describe('ChartComponent', () => {
   let component: ChartComponent;
@@ -8,7 +9,9 @@ describe('ChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChartComponent ]
+      imports: [GoogleChartsModule.forRoot()],
+      declarations: [ ChartComponent ],
+      providers: [ChangeDetectorRef]
     })
     .compileComponents();
   }));
