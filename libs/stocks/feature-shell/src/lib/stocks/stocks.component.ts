@@ -12,9 +12,7 @@ export class StocksComponent implements OnInit {
   stockPickerForm: FormGroup;
   symbol: string;
   period: string;
-
   quotes$ = this.priceQuery.priceQueries$;
-
   timePeriods = TIME_PERIODS;
 
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {

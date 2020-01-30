@@ -1,9 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CHART_OPTIONS } from './consts/chart-const';
 import { IChartOptions } from './interface/chart-options.interface';
 
@@ -13,12 +8,12 @@ import { IChartOptions } from './interface/chart-options.interface';
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit {
-  @Input() data: (string | number)[][];
-  
+  @Input() data: any;
+
   chart: {
     title: string;
     type: string;
-    data: (string | number)[][];
+    data: any;
     columnNames: string[];
     options: IChartOptions;
   };
