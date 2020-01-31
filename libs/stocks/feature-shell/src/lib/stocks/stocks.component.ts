@@ -11,6 +11,7 @@ export class StocksComponent implements OnInit {
   stockPickerForm: FormGroup;
   symbol: string;
   period: string;
+  maxDate = new Date();
 
   quotes$ = this.priceQuery.priceQueries$;
 
@@ -28,7 +29,8 @@ export class StocksComponent implements OnInit {
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = fb.group({
       symbol: [null, Validators.required],
-      period: [null, Validators.required]
+      startDate: [null, Validators.required],
+      endDate: [null, Validators.required]
     });
   }
 
@@ -36,8 +38,16 @@ export class StocksComponent implements OnInit {
 
   fetchQuote() {
     if (this.stockPickerForm.valid) {
-      const { symbol, period } = this.stockPickerForm.value;
-      this.priceQuery.fetchQuote(symbol, period);
+      const { symbol, startDate, endDate } = this.stockPickerForm.value;
+      this.priceQuery.fetchQuote(symbol, startDate, endDate);
+    }
+  }
+  validateStartEndDate() {
+    const { startDate, endDate } = this.stockPickerForm.value;
+    if (startDate && endDate) {
+      if (startDate > endDate) {
+        this.stockPickerForm.controls['endDate'].setValue(startDate);
+      }
     }
   }
 }

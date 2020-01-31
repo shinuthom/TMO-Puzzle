@@ -1,6 +1,6 @@
 import { PriceQueryAction, PriceQueryActionTypes } from './price-query.actions';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { PriceQuery } from './price-query.type';
+import { PriceQuery, PriceQueryResponse } from './price-query.type';
 import { transformPriceQueryResponse } from './price-query-transformer.util';
 
 export const PRICEQUERY_FEATURE_KEY = 'priceQuery';
@@ -34,6 +34,11 @@ export function priceQueryReducer(
 ): PriceQueryState {
   switch (action.type) {
     case PriceQueryActionTypes.PriceQueryFetched: {
+      action.queryResults = filterDataWithDates(
+        action.queryResults,
+        action.startDate,
+        action.endDate
+      );
       return priceQueryAdapter.addAll(
         transformPriceQueryResponse(action.queryResults),
         state
@@ -47,4 +52,18 @@ export function priceQueryReducer(
     }
   }
   return state;
+}
+function filterDataWithDates(
+  queryResults: PriceQueryResponse[],
+  startDate: string,
+  endDate: string
+) {
+  return queryResults.filter((stockData: PriceQueryResponse) => {
+    const stockDateCon = new Date(stockData.date);
+    const startDateCon = new Date(startDate);
+    const endDateCon = new Date(endDate);
+    if (stockDateCon >= startDateCon && stockDateCon <= endDateCon) {
+      return true;
+    }
+  });
 }
