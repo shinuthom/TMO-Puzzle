@@ -21,7 +21,6 @@
     <input
       formControlName="startDate"
       (dateChange)="validateStartEndDate()"
-      [(ngModel)]="startDateModel"
       matInput
       [max]="maxDate"
       [matDatepicker]="startDate"
@@ -35,7 +34,6 @@
     <input
       formControlName="endDate"
       (dateChange)="validateStartEndDate()"
-      [(ngModel)]="endDateModel"
       matInput
       [max]="maxDate"
       [matDatepicker]="endDate"

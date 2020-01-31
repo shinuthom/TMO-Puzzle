@@ -11,8 +11,6 @@ export class StocksComponent implements OnInit {
   stockPickerForm: FormGroup;
   symbol: string;
   period: string;
-  startDateModel: Date;
-  endDateModel: Date;
   maxDate = new Date();
 
   quotes$ = this.priceQuery.priceQueries$;
@@ -45,9 +43,10 @@ export class StocksComponent implements OnInit {
     }
   }
   validateStartEndDate() {
-    if (this.startDateModel && this.endDateModel) {
-      if (this.startDateModel > this.endDateModel) {
-        this.endDateModel = this.startDateModel;
+    const { startDate, endDate } = this.stockPickerForm.value;
+    if (startDate && endDate) {
+      if (startDate > endDate) {
+        this.stockPickerForm.controls['endDate'].setValue(startDate);
       }
     }
   }

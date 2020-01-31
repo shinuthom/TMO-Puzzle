@@ -80,10 +80,14 @@ describe('StocksComponent', () => {
     it('should validate date', () => {
       const today = new Date();
       const nextday = today.setDate(today.getDate() + 1);
-      component.endDateModel = new Date();
-      component.startDateModel = new Date(nextday);
+      component.stockPickerForm.controls['startDate'].setValue(
+        new Date(nextday)
+      );
+      component.stockPickerForm.controls['endDate'].setValue(new Date());
       component.validateStartEndDate();
-      expect(component.endDateModel).toEqual(component.startDateModel);
+      expect(component.stockPickerForm.controls['endDate'].value).toEqual(
+        component.stockPickerForm.controls['startDate'].value
+      );
     });
   });
 });
